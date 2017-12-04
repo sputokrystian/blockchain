@@ -32,8 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,11 +51,65 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\Block.cs" />
+    <Compile Include="Helper\Hash.cs" />
+    <Compile Include="Helper\ObjectToByte.cs" />
+    <Compile Include="Helper\RandomStrings.cs" />
+    <Compile Include="Helper\Timestamp.cs" />
+    <Compile Include="Model\Block.cs" />
+    <Compile Include="Model\Blockchain.cs">
+      <DependentUpon>BlockchainExampleDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\BlockchainExampleDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlockchainExampleDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BlockchainExampleDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlockchainExampleDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BlockchainExampleDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlockchainExampleDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Users.cs">
+      <DependentUpon>BlockchainExampleDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model\BlockchainExampleDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BlockchainExampleDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\BlockchainExampleDB.edmx.diagram">
+      <DependentUpon>BlockchainExampleDB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Model\BlockchainExampleDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BlockchainExampleDB.edmx</DependentUpon>
+      <LastGenOutput>BlockchainExampleDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\BlockchainExampleDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BlockchainExampleDB.edmx</DependentUpon>
+      <LastGenOutput>BlockchainExampleDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
