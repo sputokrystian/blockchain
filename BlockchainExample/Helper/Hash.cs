@@ -14,10 +14,10 @@ namespace BlockchainExample.Helper
             return Convert.ToBase64String(hash);
         }
 
-        public static string SHA512HashBlock(Blockchain block)
+        public static string SHA512HashBlock(ref Blockchain block)
         {
             SHA512 hasher = SHA512Managed.Create();
-            var hash = hasher.ComputeHash(ObjectToByte.ObjectToByteArray(Encoding.Default.GetBytes(block.Data + block.Index + block.PrevHash + block.TimeStamp)));
+            var hash = hasher.ComputeHash(ObjectToByte.ObjectToByteArray(Encoding.Default.GetBytes(block.Data + block.Index + block.PrevHash + block.TimeStamp + block.Nonce)));
             return Convert.ToBase64String(hash);
         }
     }

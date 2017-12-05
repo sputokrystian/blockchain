@@ -19,5 +19,6 @@ namespace BlockchainExample.Model
         public string Hash { get; set; }
         public string PrevHash { get; set; }
         public long TimeStamp { get; set; }
+        public int Nonce { get; set; }
     }
 }

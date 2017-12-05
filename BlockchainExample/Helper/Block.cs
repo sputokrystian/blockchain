@@ -16,7 +16,7 @@ namespace BlockchainExample.Helper
                 }
                 catch (Exception)
                 {
-                    return new Blockchain(0, string.Empty, string.Empty, string.Empty);
+                    return new Blockchain(0, string.Empty, string.Empty, string.Empty,0);
                 }
             }
         }
