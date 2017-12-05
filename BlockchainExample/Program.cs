@@ -1,7 +1,7 @@
 ﻿using BlockchainExample.Helper;
 using BlockchainExample.Model;
 using System;
-using System.Diagnostics;
+using System.Threading;
 
 namespace BlockchainExample
 {
@@ -9,9 +9,14 @@ namespace BlockchainExample
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Enter proof of work difficulty (0-10): ");
-            var difficultyString = Console.ReadLine();
-            int.TryParse(difficultyString, out int Difficulty);
+            int Difficulty = 0;
+
+            do
+            {
+                Console.WriteLine("Enter proof of work difficulty (1-10): ");
+                var difficultyString = Console.ReadLine();
+                int.TryParse(difficultyString, out Difficulty);
+            } while (!(Difficulty > 0 && Difficulty < 10));
 
             Console.WriteLine("Enter iteration: ");
             var iterationString = Console.ReadLine();
@@ -21,23 +26,43 @@ namespace BlockchainExample
             {
                 try
                 {
-                    GenerateBlock(Difficulty);
+                    string UserHash = AddUser(); // Generate some data for block
+
+                    //Simulate concurate miners
+                    Blockchain block = null;
+                    Thread thread1 = new Thread(u => block = GenerateBlock(Difficulty, UserHash));
+                    Thread thread2 = new Thread(u => block = GenerateBlock(Difficulty, UserHash));
+                    Thread thread3 = new Thread(u => block = GenerateBlock(Difficulty, UserHash));
+                    Thread thread4 = new Thread(u => block = GenerateBlock(Difficulty, UserHash));
+
+                    thread1.Start();
+                    thread2.Start();
+                    thread3.Start();
+                    thread4.Start();
+
+                    //Wait for solution
+                    while (block == null)
+                    {
+                    }
+
+                    //Stop mining, we've got it
+                    thread1.Abort();
+                    thread2.Abort();
+                    thread3.Abort();
+                    thread4.Abort();
+
+                    //Add it to DB
+                    block.AddBlock();
+                    Console.WriteLine();
+                    Console.WriteLine("Found block! ID: " + block.Index + " Hash: " + block.Hash);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
+            Console.WriteLine("Enter to close");
             Console.ReadKey();
-        }
-
-        private static void GenerateBlock(int Difficulty)
-        {
-            string UserHash = AddUser();
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            GenerateBlock(UserHash, Difficulty);
-            stopwatch.Stop();
-            Console.WriteLine("Block get in " + stopwatch.ElapsedMilliseconds + "ms");
         }
 
         private static string AddUser()
@@ -49,16 +74,13 @@ namespace BlockchainExample
             return Hash.SHA512HashUser(user);
         }
 
-        private static void GenerateBlock(string Data, int Difficulty)
+        private static Blockchain GenerateBlock(int Difficulty, string Data)
         {
             var prevBlockHash = Helper.Block.GetLastBlock().Hash;
-            Blockchain Block = new Blockchain(Timestamp.Get(), Data, string.Empty, prevBlockHash, 0);
+            Blockchain Block = new Blockchain(Timestamp.Get(), Data, string.Empty /*We don't have hash yet, only data*/, prevBlockHash, 0);
             var BlockHash = ValidHash(ref Block, Difficulty);
-            Block.Hash = BlockHash;
-            Block.AddBlock();
-
-            Console.WriteLine("Added block to blockchain: " + Block.Index);
-            Console.WriteLine("Block hash: " + BlockHash);
+            Block.Hash = BlockHash; //Here we have valid hash
+            return Block; //valid block, but we don't know it is first solution
         }
 
         //1 level of difficutly - 1 zero before rest of the hash
@@ -66,6 +88,7 @@ namespace BlockchainExample
         {
             string ProofOfWorkString = new string('0', Difficulty);
             string BlockHash = string.Empty;
+            //Try unless is valid hash for actual difficulty
             while (true)
             {
                 BlockHash = Hash.SHA512HashBlock(ref block);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace BlockchainExample.Model
 {
@@ -27,18 +28,32 @@ namespace BlockchainExample.Model
         {
             using (var db = new BlockchainExampleEntities())
             {
-                try
+                using (var dbTran = db.Database.BeginTransaction(IsolationLevel.Serializable))
                 {
-                    db.Blockchain.Add(this);
-                    db.SaveChanges();
-                    db.Dispose();
-                    return this.Index;
-                }
-                catch (Exception)
-                {
-                    return null;
+                    try
+                    {
+                        if (ValidateBlock())
+                        {
+                            db.Blockchain.Add(this);
+                            db.SaveChanges();
+                            dbTran.Commit();
+                            return this.Index;
+                        }
+                        dbTran.Rollback();
+                        return null;
+                    }
+                    catch (Exception)
+                    {
+                        dbTran.Rollback();
+                        return null;
+                    }
                 }
             }
+        }
+
+        private bool ValidateBlock()
+        {
+            return Helper.Block.GetLastBlock().Hash == this.PrevHash;
         }
     }
 }
