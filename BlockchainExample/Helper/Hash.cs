@@ -1,16 +1,12 @@
 ﻿using BlockchainExample.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BlockchainExample.Helper
 {
     public class Hash
     {
-
         public static string SHA512HashUser(Users user)
         {
             SHA512 hasher = SHA512.Create();
@@ -24,7 +20,5 @@ namespace BlockchainExample.Helper
             var hash = hasher.ComputeHash(ObjectToByte.ObjectToByteArray(Encoding.Default.GetBytes(block.Data + block.Index + block.PrevHash + block.TimeStamp)));
             return Convert.ToBase64String(hash);
         }
-
-
     }
 }
