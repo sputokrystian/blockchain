@@ -10,6 +10,7 @@ namespace BlockchainExample
         private static void Main(string[] args)
         {
             int Difficulty = 0;
+            int Iteration = 0;
 
             do
             {
@@ -18,11 +19,14 @@ namespace BlockchainExample
                 int.TryParse(difficultyString, out Difficulty);
             } while (!(Difficulty > 0 && Difficulty < 10));
 
-            Console.WriteLine("Enter iteration: ");
-            var iterationString = Console.ReadLine();
-            int.TryParse(iterationString, out int iteration);
+            do
+            {
+                Console.WriteLine("Enter iteration: ");
+                var iterationString = Console.ReadLine();
+                int.TryParse(iterationString, out Iteration);
+            } while (Iteration == 0);
 
-            for (int i = 0; i < iteration; i++)
+            for (int i = 0; i < Iteration; i++)
             {
                 try
                 {
@@ -54,7 +58,9 @@ namespace BlockchainExample
                     //Add it to DB
                     block.AddBlock();
                     Console.WriteLine();
-                    Console.WriteLine("Found block! ID: " + block.Index + " Hash: " + block.Hash);
+                    Console.WriteLine("Found block! ID: " + block.Index);
+                    Console.WriteLine("Hash: " + block.Hash);
+                    Console.WriteLine("Previous Hash: " + block.PrevHash);
                 }
                 catch (Exception ex)
                 {
