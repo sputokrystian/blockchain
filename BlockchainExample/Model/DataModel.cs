@@ -4,27 +4,27 @@ using System.Linq;
 namespace BlockchainExample.Model
 {
     [Serializable]
-    public partial class Users
+    public partial class Data
     {
-        public Users()
+        public Data()
         {
             this.Name = string.Empty;
             this.SomeData = string.Empty;
         }
 
-        public Users(string Name, string SomeData)
+        public Data(string Name, string SomeData)
         {
             this.Name = Name;
             this.SomeData = SomeData;
         }
 
-        public int? SaveUserInDatabase()
+        public int? SaveDataInDatabase()
         {
             using (var db = new BlockchainExampleEntities())
             {
                 try
                 {
-                    db.Users.Add(this);
+                    db.Data.Add(this);
                     db.SaveChanges();
                     db.Dispose();
                     return this.ID;
@@ -36,13 +36,13 @@ namespace BlockchainExample.Model
             }
         }
 
-        public Users GetUserByID()
+        public Data GetDataByID()
         {
             using (var db = new BlockchainExampleEntities())
             {
                 try
                 {
-                    return db.Users.FirstOrDefault(u => u.ID == this.ID);
+                    return db.Data.FirstOrDefault(u => u.ID == this.ID);
                 }
                 catch (Exception)
                 {
@@ -51,17 +51,17 @@ namespace BlockchainExample.Model
             }
         }
 
-        public bool RemoveUser()
+        public bool RemoveData()
         {
             BlockchainExampleEntities db = new BlockchainExampleEntities();
             try
             {
-                var UserToRemove = db.Users.FirstOrDefault(u => u.ID == this.ID);
-                if (UserToRemove == null)
+                var DataToRemove = db.Data.FirstOrDefault(u => u.ID == this.ID);
+                if (DataToRemove == null)
                 {
                     throw new Exception();
                 }
-                db.Users.Remove(UserToRemove);
+                db.Data.Remove(DataToRemove);
                 db.SaveChanges();
                 db.Dispose();
             }

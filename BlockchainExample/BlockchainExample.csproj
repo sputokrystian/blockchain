@@ -51,16 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\Block.cs" />
-    <Compile Include="Helper\Hash.cs" />
-    <Compile Include="Helper\ObjectToByte.cs" />
-    <Compile Include="Helper\RandomStrings.cs" />
-    <Compile Include="Helper\Timestamp.cs" />
-    <Compile Include="Model\Block.cs" />
+    <Compile Include="Helpers\HashHelper.cs" />
+    <Compile Include="Helpers\ObjectToByteHelper.cs" />
+    <Compile Include="Helpers\RandomStringsHelper.cs" />
+    <Compile Include="Helpers\TimestampHelper.cs" />
+    <Compile Include="Model\BlockchainModel.cs" />
     <Compile Include="Model\Blockchain.cs">
       <DependentUpon>BlockchainExampleDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Data.cs">
+      <DependentUpon>BlockchainExampleDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataModel.cs" />
     <Compile Include="Model\BlockchainExampleDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -75,9 +77,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BlockchainExampleDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Users.cs">
-      <DependentUpon>BlockchainExampleDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

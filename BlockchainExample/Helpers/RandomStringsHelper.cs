@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BlockchainExample.Helper
 {
-    public class RandomStrings
+    public class RandomStringsHelper
     {
         private static Random random = new Random();
 

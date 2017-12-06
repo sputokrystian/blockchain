@@ -5,8 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8cdb1184e7a24d3ebf8e845f0fa4c87c" Name="Diagram1">
-        <EntityTypeShape EntityType="BlockchainExampleDB.Users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlockchainExampleDB.Blockchain" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BlockchainExampleDB.Blockchain" Width="1.5" PointX="2.375" PointY="0.5" />
+        <EntityTypeShape EntityType="BlockchainExampleDB.Data" Width="1.5" PointX="0.625" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

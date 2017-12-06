@@ -25,7 +25,7 @@ namespace BlockchainExample.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Blockchain> Blockchain { get; set; }
+        public virtual DbSet<Data> Data { get; set; }
     }
 }

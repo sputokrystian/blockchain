@@ -16,7 +16,7 @@
           <Property Name="TimeStamp" Type="bigint" Nullable="false" />
           <Property Name="Nonce" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Users">
+        <EntityType Name="Data">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -26,23 +26,15 @@
         </EntityType>
         <EntityContainer Name="BlockchainExampleDBStoreContainer">
           <EntitySet Name="Blockchain" EntityType="Self.Blockchain" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Data" EntityType="Self.Data" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BlockchainExampleDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SomeData" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityContainer Name="BlockchainExampleEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="Self.Users" />
           <EntitySet Name="Blockchain" EntityType="BlockchainExampleDB.Blockchain" />
+          <EntitySet Name="Data" EntityType="BlockchainExampleDB.Data" />
         </EntityContainer>
         <EntityType Name="Blockchain">
           <Key>
@@ -55,21 +47,20 @@
           <Property Name="TimeStamp" Type="Int64" Nullable="false" />
           <Property Name="Nonce" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Data">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SomeData" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BlockchainExampleDBStoreContainer" CdmEntityContainer="BlockchainExampleEntities">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="BlockchainExampleDB.Users">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SomeData" ColumnName="SomeData" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Blockchain">
             <EntityTypeMapping TypeName="BlockchainExampleDB.Blockchain">
               <MappingFragment StoreEntitySet="Blockchain">
@@ -79,6 +70,15 @@
                 <ScalarProperty Name="Hash" ColumnName="Hash" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
                 <ScalarProperty Name="Index" ColumnName="Index" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Data">
+            <EntityTypeMapping TypeName="BlockchainExampleDB.Data">
+              <MappingFragment StoreEntitySet="Data">
+                <ScalarProperty Name="SomeData" ColumnName="SomeData" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

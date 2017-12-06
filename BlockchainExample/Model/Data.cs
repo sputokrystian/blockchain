@@ -12,7 +12,7 @@ namespace BlockchainExample.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Data
     {
         public int ID { get; set; }
         public string Name { get; set; }

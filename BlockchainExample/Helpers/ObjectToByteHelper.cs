@@ -3,7 +3,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BlockchainExample.Helper
 {
-    public class ObjectToByte
+    public class ObjectToByteHelper
     {
         public static byte[] ObjectToByteArray(object obj)
         {
